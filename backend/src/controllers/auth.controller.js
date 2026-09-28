@@ -191,3 +191,22 @@ export const refreshController = async (req, res) => {
     });
   }
 };
+
+//Get the logged in profile information
+export const getProfileController = async (req, res) => {
+  const { userId, role } = req.user;
+
+  const user = await userModel.findById(userId);
+
+  res.status(200).json({
+    message: "User data fetch successfully",
+    data: {
+      user: {
+        email: user.email,
+        name: user.name,
+        id: user._id,
+        role,
+      },
+    },
+  });
+};
