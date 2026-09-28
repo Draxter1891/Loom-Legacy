@@ -1,9 +1,276 @@
-import React from 'react'
+import { Link } from "react-router";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 const Register = () => {
-  return (
-    <div>Register</div>
-  )
-}
+  const [showPassword, setShowPassword] = useState(false);
 
-export default Register
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+    // Registration logic here
+  };
+
+  return (
+    <div className="min-h-screen bg-[#111114] text-[#e8e0d6]">
+
+      {/* Header */}
+      <header className="flex h-18 items-center justify-between border-b border-[#29292c] px-8 lg:px-20">
+        <Link
+          to="/"
+          className="flex items-center gap-3"
+        >
+          <span className="text-[20px] font-light text-[#c7aa7c]">
+            ⌗
+          </span>
+
+          <span className="font-serif text-[22px] font-semibold tracking-tight">
+            Loom & Legacy
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-[#8d8983] sm:flex">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#c9a873]" />
+          Authenticate
+        </div>
+      </header>
+
+      {/* Main */}
+      <main className="flex min-h-[calc(100vh-72px)] items-center justify-center px-6 py-14">
+
+        <div className="w-full max-w-120">
+
+          {/* Eyebrow */}
+          <div className="mb-7 flex items-center gap-4">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#d0ad76]">
+              New User
+            </span>
+
+            <span className="h-px w-12 bg-[#50483d]" />
+
+            <span className="text-[10px] uppercase tracking-[0.15em] text-[#77736d]">
+              No. 05
+            </span>
+          </div>
+
+          {/* Heading */}
+          <div className="mb-9">
+            <h1 className="font-serif text-[52px] leading-[0.95] tracking-[-0.03em] text-[#eee7dd] sm:text-[62px]">
+              Begin your
+              <br />
+
+              <span className="italic text-[#d3ad75]">
+                legacy.
+              </span>
+            </h1>
+
+            <p className="mt-6 max-w-102.5 text-[14px] leading-6 text-[#9d9992]">
+              Create your account and gain access to our
+              curated collection of amazing and limited edition products.
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Name */}
+            <div>
+              <label
+                htmlFor="name"
+                className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b6afa5]"
+              >
+                Full Name
+              </label>
+
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                required
+                className="
+                  w-full
+                  border-b
+                  rounded-xl
+                  border-[#454348]
+                  bg-transparent
+                  px-4
+                  py-3
+                  text-[14px]
+                  text-[#e8e0d6]
+                  outline-none
+                  placeholder:text-[#5f5c59]
+                  transition
+                  focus:border-[#c8a56e]
+                "
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b6afa5]"
+              >
+                Email Address
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your@email.com"
+                required
+                className="
+                  w-full
+                  border-b
+                  rounded-xl
+                  border-[#454348]
+                  bg-transparent
+                  px-4
+                  py-3
+                  text-[14px]
+                  text-[#e8e0d6]
+                  outline-none
+                  placeholder:text-[#5f5c59]
+                  transition
+                  focus:border-[#c8a56e]
+                "
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b6afa5]"
+              >
+                Password
+              </label>
+
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Create a password"
+                  required
+                  className="
+                    w-full
+                    border-b
+                    rounded-xl
+                    border-[#454348]
+                    bg-transparent
+                    px-4
+                    py-3
+                    pr-10
+                    text-[14px]
+                    text-[#e8e0d6]
+                    outline-none
+                    placeholder:text-[#5f5c59]
+                    transition
+                    focus:border-[#c8a56e]
+                  "
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#77736d] transition hover:text-[#d0ad76]"
+                  aria-label={
+                    showPassword ? "Hide password" : "Show password"
+                  }
+                >
+                  {showPassword ? (
+                    <EyeOff size={17} strokeWidth={1.5} />
+                  ) : (
+                    <Eye size={17} strokeWidth={1.5} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="
+                group
+                mt-2
+                flex
+                w-full
+                rounded-xl
+                items-center
+                justify-center
+                gap-3
+                bg-[#e8dfd4]
+                px-6
+                py-4
+                text-[11px]
+                font-semibold
+                uppercase
+                tracking-[0.15em]
+                text-[#151518]
+                transition
+                hover:bg-[#d2ae78]
+              "
+            >
+              Register
+
+              <ArrowRight
+                size={16}
+                strokeWidth={1.5}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </button>
+          </form>
+
+          {/* Login */}
+          <div className="mt-9 border-t border-[#29292c] pt-6 text-center">
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[#77736d]">
+              Already a member?
+            </p>
+
+            <Link
+              to="/"
+              className="mt-3 inline-block text-[11px] font-semibold uppercase tracking-[0.16em] text-[#d0ad76] underline decoration-[#5b4a35] underline-offset-4 transition hover:text-[#ead1a6]"
+            >
+              Login
+            </Link>
+          </div>
+
+          {/* Footer Detail */}
+          <div className="mt-10 flex items-center justify-between text-[9px] uppercase tracking-[0.18em] text-[#55535a]">
+            <span>Authenticity</span>
+            <span>Affordably Premium</span>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Register;
