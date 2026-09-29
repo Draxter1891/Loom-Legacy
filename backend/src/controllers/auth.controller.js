@@ -192,7 +192,7 @@ export const refreshController = async (req, res) => {
   }
 };
 
-//Get the logged in profile information
+//Get PROFILE CONTROLLER - the logged in profile information
 export const getProfileController = async (req, res) => {
   const { userId, role } = req.user;
 
