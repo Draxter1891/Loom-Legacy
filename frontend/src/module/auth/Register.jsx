@@ -1,16 +1,22 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { registerUser } from "../../api/auth.api";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setCShowPassword] = useState(false);
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
+  //Recieve inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -20,26 +26,27 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  //Handle submit action through api
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const res = await registerUser(formData);
 
-    // Registration logic here
+      if(res.status===201){
+        navigate("/")
+      }
+    } catch (error) {
+      console.log(error.response?.data);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#111114] text-[#e8e0d6]">
-
       {/* Header */}
       <header className="flex h-18 items-center justify-between border-b border-[#29292c] px-8 lg:px-20">
-        <Link
-          to="/"
-          className="flex items-center gap-3"
-        >
-          <span className="text-[20px] font-light text-[#c7aa7c]">
-            ⌗
-          </span>
+        <Link to="/" className="flex items-center gap-3">
+          <span className="text-[20px] font-light text-[#c7aa7c]">⌗</span>
 
           <span className="font-serif text-[22px] font-semibold tracking-tight">
             Loom & Legacy
@@ -54,9 +61,7 @@ const Register = () => {
 
       {/* Main */}
       <main className="flex min-h-[calc(100vh-72px)] items-center justify-center px-6 py-14">
-
         <div className="w-full max-w-120">
-
           {/* Eyebrow */}
           <div className="mb-7 flex items-center gap-4">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#d0ad76]">
@@ -75,21 +80,17 @@ const Register = () => {
             <h1 className="font-serif text-[52px] leading-[0.95] tracking-[-0.03em] text-[#eee7dd] sm:text-[62px]">
               Begin your
               <br />
-
-              <span className="italic text-[#d3ad75]">
-                legacy.
-              </span>
+              <span className="italic text-[#d3ad75]">legacy.</span>
             </h1>
 
             <p className="mt-6 max-w-102.5 text-[14px] leading-6 text-[#9d9992]">
-              Create your account and gain access to our
-              curated collection of amazing and limited edition products.
+              Create your account and gain access to our curated collection of
+              amazing and limited edition products.
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-
             {/* Name */}
             <div>
               <label
@@ -200,9 +201,7 @@ const Register = () => {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-5 top-1/2 -translate-y-1/2 text-[#77736d] transition hover:text-[#d0ad76]"
-                  aria-label={
-                    showPassword ? "Hide password" : "Show password"
-                  }
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <EyeOff size={17} strokeWidth={1.5} />
@@ -213,6 +212,56 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Confirm Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b6afa5]"
+              >
+               Confirm Password
+              </label>
+
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showCPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm the password"
+                  required
+                  className="
+                    w-full
+                    border-b
+                    rounded-xl
+                    border-[#454348]
+                    bg-transparent
+                    px-4
+                    py-3
+                    pr-10
+                    text-[14px]
+                    text-[#e8e0d6]
+                    outline-none
+                    placeholder:text-[#5f5c59]
+                    transition
+                    focus:border-[#c8a56e]
+                  "
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setCShowPassword(!showCPassword)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#77736d] transition hover:text-[#d0ad76]"
+                  aria-label={showCPassword ? "Hide password" : "Show password"}
+                >
+                  {showCPassword ? (
+                    <EyeOff size={17} strokeWidth={1.5} />
+                  ) : (
+                    <Eye size={17} strokeWidth={1.5} />
+                  )}
+                </button>
+              </div>
+            </div>
             {/* Submit */}
             <button
               type="submit"
@@ -238,7 +287,6 @@ const Register = () => {
               "
             >
               Register
-
               <ArrowRight
                 size={16}
                 strokeWidth={1.5}
@@ -266,7 +314,6 @@ const Register = () => {
             <span>Authenticity</span>
             <span>Affordably Premium</span>
           </div>
-
         </div>
       </main>
     </div>

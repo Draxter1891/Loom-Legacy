@@ -1,17 +1,14 @@
-import api from "./axios";
+import api from "./axiosInstance";
+
+
 
 export const registerUser = async (userData) => {
   const response = await api.post("/auth/register", userData);
-  return response.data;
+  return response;
 };
 
 export const loginUser = async (credentials) => {
   const response = await api.post("/auth/login", credentials);
-  return response.data;
-};
-
-export const refreshAccessToken = async () => {
-  const response = await api.post("/auth/refresh-token");
   return response.data;
 };
 
@@ -22,5 +19,5 @@ export const logoutUser = async () => {
 
 export const getCurrentUser = async () => {
   const response = await api.get("/auth/me");
-  return response.data;
+  return response;
 };

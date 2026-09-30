@@ -1,27 +1,19 @@
 import { NavLink } from "react-router";
-import {
-  Search,
-  Bookmark,
-  ShoppingBag,
-  UserRound,
-} from "lucide-react";
+import { Search, Bookmark, ShoppingBag, UserRound } from "lucide-react";
 
 const Navbar = () => {
   const navLinks = [
     { name: "HOME", path: "/home" },
     { name: "ALL PRODUCTS", path: "/shop" },
     { name: "CART", path: "/cart" },
+    { name: "PROFILE", path: "/profile" },
   ];
 
   return (
     <header className="w-full bg-[#121216] text-[#e8e1d8]">
       <nav className="mx-auto flex h-20 w-full items-center justify-between px-4 lg:px-10">
-
         {/* Logo */}
-        <NavLink
-          to="/home"
-          className="flex items-center gap-3 shrink-0"
-        >
+        <NavLink to="/home" className="flex items-center gap-3 shrink-0">
           {/* Logo mark */}
           <div className="relative flex h-7 w-7 items-center justify-center">
             <span className="text-xl font-light text-[#cdb58c]">⌘</span>

@@ -1,9 +1,13 @@
 import { Link, useNavigate } from "react-router";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../../hooks/auth.hook";
+import { loginUser } from "../../api/auth.api";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const { setUser, setAccessToken } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,27 +25,27 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const res = await loginUser(formData);
 
-    // Login logic here
-    // navigate("/home");
+      console.log(res);
+      setUser(res.data.data.user);
+      setAccessToken(res.data.data.accessToken);
+      navigate("/home");
+    } catch (error) {
+      console.log(error.response?.data || error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#111114] text-[#e8e0d6]">
-
       {/* Top Brand Bar */}
       <header className="flex h-18 items-center justify-between border-b border-[#29292c] px-8 lg:px-20">
-        <Link
-          to="/"
-          className="flex items-center gap-3"
-        >
-          <span className="text-[20px] font-light text-[#c7aa7c]">
-            ⌗
-          </span>
+        <Link to="/" className="flex items-center gap-3">
+          <span className="text-[20px] font-light text-[#c7aa7c]">⌗</span>
 
           <span className="font-serif text-[22px] font-semibold tracking-tight">
             Loom & Legacy
@@ -56,9 +60,7 @@ const LoginPage = () => {
 
       {/* Main */}
       <main className="flex min-h-[calc(100vh-72px)] items-center justify-center px-6 py-16">
-
         <div className="w-full max-w-120">
-
           {/* Eyebrow */}
           <div className="mb-8 flex items-center gap-4">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#d0ad76]">
@@ -77,21 +79,17 @@ const LoginPage = () => {
             <h1 className="font-serif text-[52px] leading-[0.95] tracking-[-0.03em] text-[#eee7dd] sm:text-[62px]">
               Welcome
               <br />
-
-              <span className="italic text-[#d3ad75]">
-                back.
-              </span>
+              <span className="italic text-[#d3ad75]">back.</span>
             </h1>
 
             <p className="mt-6 max-w-97.5 text-[14px] leading-6 text-[#9d9992]">
-              Enter your registry credentials to access your private
-              collection and continue your journey through Loom & Legacy.
+              Enter your registry credentials to access your private collection
+              and continue your journey through Loom & Legacy.
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-7">
-
             {/* Email */}
             <div>
               <label
@@ -176,9 +174,7 @@ const LoginPage = () => {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-5 top-1/2 -translate-y-1/2 text-[#77736d] transition hover:text-[#d0ad76]"
-                  aria-label={
-                    showPassword ? "Hide password" : "Show password"
-                  }
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <EyeOff size={17} strokeWidth={1.5} />
@@ -213,7 +209,6 @@ const LoginPage = () => {
               "
             >
               Enter The Archive
-
               <ArrowRight
                 size={16}
                 strokeWidth={1.5}
@@ -241,7 +236,6 @@ const LoginPage = () => {
             <span>Authenticity</span>
             <span>Affordably Premium</span>
           </div>
-
         </div>
       </main>
     </div>
