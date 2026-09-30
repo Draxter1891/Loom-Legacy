@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { registerUser } from "../../api/auth.api";
+import useApi from "../../hooks/api.hook";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setCShowPassword] = useState(false);
-
-  const navigate = useNavigate()
+  const { registerUser } = useApi();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,10 +34,32 @@ const Register = () => {
     try {
       const res = await registerUser(formData);
 
-      if(res.status===201){
-        navigate("/")
+      if (res.status === 201) {
+        toast.success("Registered successfully, please login to continue.", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+        navigate("/");
       }
     } catch (error) {
+      toast.error("Something went wrong, please try later.", {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      });
       console.log(error.response?.data);
     }
   };
@@ -218,7 +241,7 @@ const Register = () => {
                 htmlFor="password"
                 className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b6afa5]"
               >
-               Confirm Password
+                Confirm Password
               </label>
 
               <div className="relative">

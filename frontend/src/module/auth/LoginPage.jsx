@@ -1,15 +1,14 @@
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth.hook";
-import { loginUser } from "../../api/auth.api";
+import useApi from "../../hooks/api.hook";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
   const { setUser, setAccessToken } = useAuth();
-
   const [showPassword, setShowPassword] = useState(false);
+  const { loginUser } = useApi();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -30,12 +29,24 @@ const LoginPage = () => {
 
     try {
       const res = await loginUser(formData);
-
-      console.log(res);
-      setUser(res.data.data.user);
-      setAccessToken(res.data.data.accessToken);
-      navigate("/home");
+      setUser(res.data.user);
+      setAccessToken(res.data.accessToken);
+      toast.success("Logged in successfully", 
+        {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      }
+    );
+      return <Navigate to={"/home"} replace />;
     } catch (error) {
+      toast.error("User not found, Please register");
       console.log(error.response?.data || error);
     }
   };

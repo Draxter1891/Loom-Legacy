@@ -1,21 +1,45 @@
 import { Pencil, LockKeyhole, LogOut } from "lucide-react";
 import { useAuth } from "../../hooks/auth.hook";
-import { getCurrentUser } from "../../api/auth.api";
+import useApi from "../../hooks/api.hook";
 import { useEffect } from "react";
+import api from "../../api/axiosInstance";
+import { Navigate, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const Profile = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser, setAccessToken } = useAuth();
+  const navigate = useNavigate();
+
+  const { getCurrentUser, logoutUser } = useApi();
 
   const fetchUserProfile = async () => {
     try {
       const res = await getCurrentUser();
-      console.log(res);
       setUser(res.data.data.user);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleLogout = async () => {
+    const res = await logoutUser();
+    if (res.status === 200) {
+      setUser(null);
+      setAccessToken(null);
+      toast.success("Logged out successfully.", {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      });
+      <Navigate to={"/"} replace />;
+    }
+  };
   useEffect(() => {
     fetchUserProfile();
   }, [setUser]);
@@ -58,7 +82,10 @@ const Profile = () => {
               Edit Profile
             </button> */}
 
-            <button className="flex items-center gap-3 border-y border-r border-[#f14b21]/30 bg-[#f14b21] px-5 text-xs font-semibold uppercase tracking-[0.12em] text-[#29241d] transition hover:bg-[#f14b21c7] cursor-pointer">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 border-y border-r border-[#f14b21]/30 bg-[#f14b21] px-5 text-xs font-semibold uppercase tracking-[0.12em] text-[#29241d] transition hover:bg-[#f14b21c7] cursor-pointer"
+            >
               <LogOut size={11} strokeWidth={1.5} />
               Log out
             </button>
