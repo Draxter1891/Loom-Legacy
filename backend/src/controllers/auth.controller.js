@@ -119,6 +119,29 @@ export const loginController = async (req, res) => {
   });
 };
 
+//LOGOUT CONTROLLER
+export const logoutController = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  try {
+    if (refreshToken) {
+      const decode = readRefreshToken(refreshToken);
+
+      await userModel.findByIdAndUpdate(decode.userId, {
+        refreshToken: null,
+      });
+    }
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+
+  res.clearCookie("refreshToken");
+
+  return res.status(200).json({
+    success: true,
+    message: "Logout successfully",
+  });
+};
 
 //REFRESH-TOKEN CONTROLLER
 export const refreshController = async (req, res) => {

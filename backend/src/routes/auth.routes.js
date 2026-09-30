@@ -6,6 +6,7 @@ import {
 import {
   getProfileController,
   loginController,
+  logoutController,
   refreshController,
   registerController,
 } from "../controllers/auth.controller.js";
@@ -15,6 +16,7 @@ const authRoutes = express.Router();
 
 authRoutes.post("/register", registerValidator, registerController);
 authRoutes.post("/login", loginValidator, loginController);
+authRoutes.post("/logout", logoutController);
 authRoutes.post("/refresh-token", refreshController);
 authRoutes.get("/me", authenticate, getProfileController);
 
