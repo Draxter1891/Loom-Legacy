@@ -15,9 +15,12 @@ const Navbar = () => {
         {/* Logo */}
         <NavLink to="/home" className="flex items-center gap-3 shrink-0">
           {/* Logo mark */}
-          <div className="relative flex h-7 w-7 items-center justify-center">
-            <span className="text-xl font-light text-[#cdb58c]">⌘</span>
-          </div>
+          
+            <img className="w-12"
+            src="https://ik.imagekit.io/udeluwj7a/COHORT-3.0/Loom&Legacy/LOGO-removebg-preview.png"
+            alt="Loom & Legacy Logo"
+          />
+          
 
           <span className="font-serif text-[22px] font-semibold tracking-tight">
             Loom & Legacy

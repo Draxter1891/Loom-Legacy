@@ -31,8 +31,7 @@ const LoginPage = () => {
       const res = await loginUser(formData);
       setUser(res.data.user);
       setAccessToken(res.data.accessToken);
-      toast.success("Logged in successfully", 
-        {
+      toast.success("Logged in successfully", {
         style: {
           border: "1px solid #713200",
           padding: "16px",
@@ -42,8 +41,7 @@ const LoginPage = () => {
           primary: "#713200",
           secondary: "#FFFAEE",
         },
-      }
-    );
+      });
       return <Navigate to={"/home"} replace />;
     } catch (error) {
       toast.error("User not found, Please register");
@@ -56,7 +54,10 @@ const LoginPage = () => {
       {/* Top Brand Bar */}
       <header className="flex h-18 items-center justify-between border-b border-[#29292c] px-8 lg:px-20">
         <Link to="/" className="flex items-center gap-3">
-          <span className="text-[20px] font-light text-[#c7aa7c]">⌗</span>
+          <img className="w-12"
+            src="https://ik.imagekit.io/udeluwj7a/COHORT-3.0/Loom&Legacy/LOGO-removebg-preview.png"
+            alt="Loom & Legacy Logo"
+          />
 
           <span className="font-serif text-[22px] font-semibold tracking-tight">
             Loom & Legacy
