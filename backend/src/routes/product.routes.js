@@ -37,6 +37,16 @@ productRoutes.post(
   createProductController,
 );
 
+
+/**
+ * @method GET
+ * @route api/products/get
+ * @description get all products
+ * @access user
+ * @param req.headers.authorization = Bearer <access token>
+ */
+
 productRoutes.get("/get", authenticate, getAllProductController);
+
 
 export default productRoutes;
