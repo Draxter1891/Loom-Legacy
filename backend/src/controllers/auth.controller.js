@@ -57,7 +57,7 @@ export const registerController = async (req, res) => {
   });
 };
 
-//LOGIN CONTROLLER
+
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
 

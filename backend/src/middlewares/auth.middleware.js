@@ -1,6 +1,6 @@
 import { readAccessToken } from "../utils/auth.util.js";
 
-export function authenticate(req, res, next) {
+export const authenticate = (req, res, next) => {
   const accessToken = req.headers.authorization?.split(" ")[1];
 
   if (!accessToken) {
@@ -20,13 +20,13 @@ export function authenticate(req, res, next) {
       message: "Invalid or expired access token",
     });
   }
-}
+};
 
-export function authenticateSeller(req, res, next) {
+export const authenticateSeller = (req, res, next) => {
   if (req.user.role !== "seller") {
     return res.status(403).json({
       message: "user is not authorized to perform this action.",
     });
   }
   next();
-}
+};

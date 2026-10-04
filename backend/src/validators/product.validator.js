@@ -22,7 +22,7 @@ export const createProductValidator = [
     body("sizes")
         .exists().withMessage("Sizes are required").bail()
         .isArray().withMessage("Sizes must be an array of object"),
-    body("sizes.*.size")
+   body("sizes.*.size")
         .exists().withMessage("size must be present in every entry of sizes array").bail()
         .isString().withMessage("size must be a string value").bail()
         .trim()
