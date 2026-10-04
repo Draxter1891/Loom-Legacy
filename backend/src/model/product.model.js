@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     minLength: 20,
     maxLength: 500,
   },
-  image: {
+  images: {
     type: [
       {
         type: String,
@@ -50,7 +50,7 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  seller: {
+  sellerID: {
     type: mongoose.Types.ObjectId,
     ref: "users",
     required: true,

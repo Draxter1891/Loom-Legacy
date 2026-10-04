@@ -7,4 +7,5 @@ export const config = {
   MONGO_URI: process.env.MONGO_URI,
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+  IMAGEKIT_PVT_URL: process.env.IMAGEKIT_PVT_URL,
 };

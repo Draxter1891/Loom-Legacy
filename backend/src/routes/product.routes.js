@@ -1,5 +1,8 @@
 import express from "express";
-import { createProductController } from "../controllers/products.controller.js";
+import {
+  createProductController,
+  getAllProductController,
+} from "../controllers/products.controller.js";
 import {
   authenticate,
   authenticateSeller,
@@ -33,5 +36,7 @@ productRoutes.post(
   //controller logic
   createProductController,
 );
+
+productRoutes.get("/get", authenticate, getAllProductController);
 
 export default productRoutes;
