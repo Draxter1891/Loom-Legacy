@@ -1,6 +1,8 @@
 import productModel from "../model/product.model.js";
 import { uploadFileImgkt } from "../services/storage.service.js";
 
+
+//Create Product
 export const createProductController = async (req, res) => {
   const fileUrls = [];
   for (let i = 0; i < req.files.length; i++) {
@@ -40,6 +42,8 @@ export const createProductController = async (req, res) => {
   });
 };
 
+
+//Get all products
 export const getAllProductController = async (req, res) => {
   try {
     const products = await productModel.find();
